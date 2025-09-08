@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arasaka Locations Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100vw; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    function initMap() {
+      // Center on Tokyo, Japan (Arasaka HQ in lore)
+      const center = { lat: 35.6895, lng: 139.6917 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 3,
+        center: center,
+        styles: [ // Optional: Cyberpunk style
+          { elementType: "geometry", stylers: [{ color: "#232946" }] },
+          { elementType: "labels.text.stroke", stylers: [{ color: "#232946" }] },
+          { elementType: "labels.text.fill", stylers: [{ color: "#e5e7eb" }] },
+          { featureType: "water", stylers: [{ color: "#161b22" }] }
+        ]
+      });
+
+      // Example markers (add more as needed)
+      // Markers (20+ global locations)
+new google.maps.Marker({ position: { lat: 35.6895, lng: 139.6917 }, map, title: "Arasaka HQ (Tokyo, Japan)" });
+new google.maps.Marker({ position: { lat: 37.7749, lng: -122.4194 }, map, title: "Arasaka North America (San Francisco, USA)" });
+new google.maps.Marker({ position: { lat: 51.5074, lng: -0.1278 }, map, title: "Arasaka Europe (London, UK)" });
+new google.maps.Marker({ position: { lat: 40.7128, lng: -74.0060 }, map, title: "New York City, USA" });
+new google.maps.Marker({ position: { lat: 34.0522, lng: -118.2437 }, map, title: "Los Angeles, USA" });
+new google.maps.Marker({ position: { lat: 48.8566, lng: 2.3522 }, map, title: "Paris, France" });
+new google.maps.Marker({ position: { lat: 41.9028, lng: 12.4964 }, map, title: "Rome, Italy" });
+new google.maps.Marker({ position: { lat: 52.5200, lng: 13.4050 }, map, title: "Berlin, Germany" });
+new google.maps.Marker({ position: { lat: 55.7558, lng: 37.6173 }, map, title: "Moscow, Russia" });
+new google.maps.Marker({ position: { lat: 28.6139, lng: 77.2090 }, map, title: "New Delhi, India" });
+new google.maps.Marker({ position: { lat: 31.2304, lng: 121.4737 }, map, title: "Shanghai, China" });
+new google.maps.Marker({ position: { lat: 22.3193, lng: 114.1694 }, map, title: "Hong Kong" });
+new google.maps.Marker({ position: { lat: -33.8688, lng: 151.2093 }, map, title: "Sydney, Australia" });
+new google.maps.Marker({ position: { lat: -37.8136, lng: 144.9631 }, map, title: "Melbourne, Australia" });
+new google.maps.Marker({ position: { lat: -23.5505, lng: -46.6333 }, map, title: "São Paulo, Brazil" });
+new google.maps.Marker({ position: { lat: -34.6037, lng: -58.3816 }, map, title: "Buenos Aires, Argentina" });
+new google.maps.Marker({ position: { lat: 1.3521, lng: 103.8198 }, map, title: "Singapore" });
+new google.maps.Marker({ position: { lat: 35.6762, lng: 139.6503 }, map, title: "Shinjuku Tech Hub (Japan)" });
+new google.maps.Marker({ position: { lat: 25.276987, lng: 55.296249 }, map, title: "Dubai, UAE" });
+new google.maps.Marker({ position: { lat: 19.4326, lng: -99.1332 }, map, title: "Mexico City, Mexico" });
+new google.maps.Marker({ position: { lat: 59.9343, lng: 30.3351 }, map, title: "St. Petersburg, Russia" });
+new google.maps.Marker({ position: { lat: 43.6532, lng: -79.3832 }, map, title: "Toronto, Canada" });
+
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key="enter API key"&callback=initMap"></script>
+</body>
+</html>

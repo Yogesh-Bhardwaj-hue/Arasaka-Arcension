@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARASAKA // Haven Division</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #1f2937; }
+    .glass {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .text-shadow-heavy {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .tilt:hover {
+      transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+      transition: transform 0.4s ease;
+    }
+     .active-tab {
+    color: white;
+    position: relative;
+    border-bottom: 2px solid #3b82f6; /* blue-600 */
+  }
+  /* Mega Menu Styles */
+#mega-menu-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0; 
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 45;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  padding-top: 100px;
+}
+#mega-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.mega-menu-panel {
+  display: none; 
+}
+.mega-menu-panel.active {
+  display: block; 
+}
+    
+    /* Header transition for scroll */
+    .header-scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .header-scrolled .nav-link {
+      color: #000;
+    }
+    
+    .header-scrolled .nav-link:hover {
+      color: #3b82f6;
+    }
+    
+    .header-scrolled .icon-btn {
+      color: #000;
+    }
+    
+    .header-scrolled .icon-btn:hover {
+      color: #3b82f6;
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-white text-black">
+
+  <!-- NAVBAR (transparent, overlays hero) -->
+  <header id="main-navbar" class="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-300">
+  <div class="flex items-center justify-between w-full py-4 px-4 md:px-8">
+    <div class="flex items-center z-50">
+      <img src="./images/logo1.png" alt="Arasaka" class="h-8 md:h-10 w-auto">
+      <img src="./images/name1.png" alt="Arasaka" class="h-8 md:h-10 w-auto ml-2">
+    </div>
+    
+    <nav id="main-nav" class="absolute left-1/2 transform -translate-x-1/2 hidden md:flex space-x-12 text-lg font-medium z-50">
+      <a href="Index.html" class="nav-link text-white hover:text-blue-400 transition cursor-pointer">Home</a>
+      <a href="haven.html" class="nav-link text-white hover:text-blue-400 transition cursor-pointer" data-menu="haven-panel">Haven Division</a>
+      <a href="forge.html" class="nav-link text-white hover:text-blue-400 transition cursor-pointer" data-menu="forge-panel">Forge Division</a>
+      <a href="labs.html" class="nav-link text-white hover:text-blue-400 transition cursor-pointer" data-menu="discover-panel">Discover</a>
+    </nav>
+    
+    <div class="flex items-center space-x-6 z-50">
+      <button title="Support" class="icon-btn text-white hover:text-blue-400 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      </button>
+      <button title="Region" class="icon-btn text-white hover:text-blue-400 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h10a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.7 9a9 9 0 0110.6 0M12 21l-4-4m4 4l4-4" /></svg>
+      </button>
+      <button title="Account" class="icon-btn text-white hover:text-blue-400 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mega-menu-overlay">
+    <div class="max-w-7xl mx-auto px-8">
+      <div id="haven-panel" class="mega-menu-panel"><div class="grid grid-cols-4 gap-8 text-black"><div><img src="./images/Robot1.png" alt="Echo-11" class="h-48 w-auto mb-4 object-contain"><h3 class="font-bold text-lg mb-4">Echo Series</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Echo-11</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Echo-11 Sentinel</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Echo-9 Legacy</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Compare Models</a></li></ul></div><div><img src="./images/model2.png" alt="Guardian-7" class="h-48 w-auto mb-4 object-contain"><h3 class="font-bold text-lg mb-4">Guardian Series</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Guardian-7</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Guardian Elite</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Security Solutions</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Enterprise Security</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">Services & Support</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Schedule Service</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Find Service Center</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Warranty</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Owner's Manual</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Contact Support</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">Shop</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Current Inventory</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Used Inventory</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Trade-In</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Test Drive</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Fleet</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Financing</a></li></ul></div></div></div>
+      <div id="forge-panel" class="mega-menu-panel"><div class="grid grid-cols-4 gap-8 text-black"><div><img src="./images/news3.png" alt="Industrial-X" class="h-48 w-auto mb-4 object-contain"><h3 class="font-bold text-lg mb-4">Industrial Series</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Industrial-X</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Heavy Loader</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Assembly Unit</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Mining Series</a></li></ul></div><div><img src="./images/AdobeStock_1647259044_Preview.jpeg" alt="Construction" class="h-48 w-auto mb-4 object-contain"><h3 class="font-bold text-lg mb-4">Construction</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Builder Pro</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Demolition Unit</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Site Manager</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Safety Inspector</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">Industrial Solutions</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Automation</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Workforce Integration</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Custom Solutions</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Consulting</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Training Programs</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">Resources</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Case Studies</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">White Papers</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">ROI Calculator</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Safety Standards</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Certifications</a></li></ul></div></div></div>
+      <div id="discover-panel" class="mega-menu-panel"><div class="grid grid-cols-4 gap-8 text-black"><div><img src="./images/AdobeStock_1566657294_Preview.jpeg" alt="AI Core" class="h-48 w-full mb-4 object-cover rounded-lg"><h3 class="font-bold text-lg mb-4">Innovation</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">AI Research</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Neural Networks</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Quantum Computing</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Future Tech</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">Company</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">About Arasaka</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Mission</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Leadership</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Careers</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Investors</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">News & Events</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Press Releases</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Events</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Blog</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Newsletter</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Media Kit</a></li></ul></div><div><h3 class="font-bold text-lg mb-4 mt-12">Experience</h3><ul class="space-y-3"><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Visit Showroom</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Virtual Tour</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Demo Request</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">AR Experience</a></li><li><a href="#" class="text-gray-600 hover:text-blue-600 transition">Customer Stories</a></li></ul></div></div></div>
+    </div>
+  </div>
+</header>
+
+  <!-- SECONDARY NAVBAR (hidden by default, appears on scroll) -->
+  <div id="model-navbar" class="fixed top-0 left-0 right-0 z-40 bg-gray-800 text-white shadow transition-transform duration-300 translate-y-[-100%]">
+    <div class="flex items-center justify-between max-w-7xl mx-auto px-6 py-3">
+      <span class="font-bold text-lg" id="model-navbar-title">Echo-11</span>
+      <div class="flex space-x-6 text-sm font-semibold">
+        <a href="#demo" class="hover:text-blue-400">Demo</a>
+        <a href="#compare" class="hover:text-blue-400">Compare</a>
+        <a href="#tradein" class="hover:text-blue-400">Trade in</a>
+        <a href="#order" class="bg-blue-600 text-white px-4 py-1 rounded-full hover:bg-blue-700 transition">Order Now</a>
+      </div>
+    </div>
+  </div>
+
+<!-- HERO Section-->
+<section id="hero" class="relative w-full h-screen">
+  <img src="./images/Echo-11.png" alt="Haven Division" class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-black/40"></div> <!-- overlay for readability -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6">Echo 11</h1>
+    <p class="text-xl md:text-2xl mb-8">Engineered for Care. Designed for Trust.</p>
+   <div class="flex space-x-4 justify-center">
+      <a href="#" class="px-8 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition-colors">Order Now</a>
+      <a href="#" class="px-8 py-3 border border-white text-white rounded-md font-semibold hover:bg-white hover:text-black transition-colors">Book a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY SHOWCASE SECTION (inserted here) -->
+<section class="w-full bg-white py-16">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Unmatched Quality, Trusted by Thousands</h2>
+    <p class="text-lg md:text-xl text-gray-700 mb-6">
+      Every Haven model is crafted with precision engineering, advanced AI, and a relentless focus on safety and reliability. 
+      Our robots undergo rigorous testing to ensure they exceed industry standards and deliver peace of mind to every household.
+    </p>
+    <div class="flex flex-col md:flex-row justify-center gap-8 mt-8">
+      <div class="flex-1 bg-gray-50 rounded-xl p-6 shadow hover:shadow-lg transition">
+        <h3 class="text-2xl font-semibold text-blue-600 mb-2">Premium Materials</h3>
+        <p class="text-gray-600">Built with aerospace-grade alloys and sustainable composites for lasting durability.</p>
+      </div>
+      <div class="flex-1 bg-gray-50 rounded-xl p-6 shadow hover:shadow-lg transition">
+        <h3 class="text-2xl font-semibold text-blue-600 mb-2">Advanced AI</h3>
+        <p class="text-gray-600">Adaptive learning and real-time responsiveness for seamless integration into your life.</p>
+      </div>
+      <div class="flex-1 bg-gray-50 rounded-xl p-6 shadow hover:shadow-lg transition">
+        <h3 class="text-2xl font-semibold text-blue-600 mb-2">Certified Safe</h3>
+        <p class="text-gray-600">Tested and certified for home safety, privacy, and reliability by global agencies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE IMAGE -->
+<section class="relative w-full h-[700px] overflow-hidden">
+  <img src="./images/AdobeStock_1566657294_Preview.jpeg" 
+       alt="AI Core Visualization" 
+       class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-black/40"></div> <!-- overlay for readability -->
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <h2 class="text-4xl md:text-6xl font-bold text-white text-center">
+      The Heart of Haven: AI Consciousness
+    </h2>
+  </div>
+</section>
+
+<!-- VIDEO BACKGROUND SECTION -->
+<section class="relative w-full h-[600px] overflow-hidden">
+  <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+    <source src="./videos/AI_Video_Generation_Scene_by_Scene.mp4" type="video/mp4">
+  </video>
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <div class="text-center space-y-4">
+      <h2 class="text-5xl font-bold text-white">The Art of Precision</h2>
+      <p class="text-lg text-gray-300">Engineered with Uncompromising Quality</p>
+    </div>
+  </div>
+</section>
+
+  <section id="interactive-tour-section" class="relative w-full bg-black text-white" style="height: 300vh;">
+  <div class="sticky top-0 h-screen flex flex-col items-center justify-center">
+    <img src="./images/Robot1.png" alt="Echo-11 Internal View" class="max-h-[80vh] w-auto transition-opacity duration-500" id="tour-robot-image"/>
+    
+    <div id="feature-1" class="feature-text absolute text-left max-w-xs p-4 opacity-0 transition-opacity duration-500" style="top: 30%; left: 15%;">
+      <h3 class="font-bold text-xl text-red-400">Arasaka A17 Neural Core</h3>
+      <p class="text-sm text-gray-300">The heart of Echo-11. It processes trillions of operations per second for true adaptive learning and emotional intelligence.</p>
+    </div>
+    <div id="feature-2" class="feature-text absolute text-right max-w-xs p-4 opacity-0 transition-opacity duration-500" style="top: 15%; right: 15%;">
+      <h3 class="font-bold text-xl text-red-400">360° LiDAR Sensor Suite</h3>
+      <p class="text-sm text-violet-300">Maps environments in real-time for flawless navigation and interaction, ensuring complete spatial awareness and safety.</p>
+    </div>
+    <div id="feature-3" class="feature-text absolute text-left max-w-xs p-4 opacity-0 transition-opacity duration-500" style="bottom: 15%; left: 15%;">
+      <h3 class="font-bold text-xl text-red-400">Carbon-Alloy Chassis</h3>
+      <p class="text-sm text-violet-300">An aerospace-grade frame provides incredible durability while remaining lightweight for silent, efficient movement.</p>
+    </div>
+  </div>
+</section>
+
+<section class="relative w-full h-screen overflow-hidden">
+  <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+      <source src="./videos/AI_Companion_A_Day_Unfolded.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>
+  <div class="absolute inset-0 bg-black/50 z-10"></div>
+  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center text-white p-8">
+      <h2 class="text-5xl md:text-7xl font-bold mb-4">Integrated Into Your Life</h2>
+      <p class="text-xl md:text-2xl max-w-3xl">From morning assistance to evening security, Echo-11 is more than a machine—it's a member of the family.</p>
+  </div>
+</section>
+
+  <!-- FEATURES GRID -->
+  <section class="w-full bg-black py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <h3 class="text-3xl font-bold text-center mb-12 text-white">Why Haven?</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      
+      <div class="relative h-80 rounded-xl overflow-hidden group transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/30">
+        <img src="./images/Sustainbility.png" alt="Sustainability" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <div class="relative h-full flex flex-col justify-end p-6">
+          <h4 class="font-semibold text-xl text-white mb-2">Sustainability</h4>
+          <p class="text-gray-300 text-sm">Built with recyclable materials, reducing environmental footprint.</p>
+        </div>
+      </div>
+
+      <div class="relative h-80 rounded-xl overflow-hidden group transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/30">
+        <img src="./images/functionality.png" alt="Reliability" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <div class="relative h-full flex flex-col justify-end p-6">
+          <h4 class="font-semibold text-xl text-white mb-2">Reliability</h4>
+          <p class="text-gray-300 text-sm">99.9% uptime AI systems for uninterrupted support.</p>
+        </div>
+      </div>
+
+      <div class="relative h-80 rounded-xl overflow-hidden group transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/30">
+        <img src="./images/reliability.png" alt="Adaptive Care" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <div class="relative h-full flex flex-col justify-end p-6">
+          <h4 class="font-semibold text-xl text-white mb-2">Adaptive Care</h4>
+          <p class="text-gray-300 text-sm">Responsive to household needs with empathy modeling.</p>
+        </div>
+      </div>
+
+      <div class="relative h-80 rounded-xl overflow-hidden group transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/30">
+        <img src="./images/privacy.png" alt="Privacy First" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <div class="relative h-full flex flex-col justify-end p-6">
+          <h4 class="font-semibold text-xl text-white mb-2">Privacy First</h4>
+          <p class="text-gray-300 text-sm">Encrypted communication and data safety by default.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <section id="echo-11-specs" class="w-full bg-black text-white py-24">
+  <div class="max-w-6xl mx-auto px-8">
+
+    <h2 class="text-4xl font-bold text-center mb-12">Echo-11 Specs</h2>
+
+    <div id="specs-tabs-nav" class="flex justify-center border-b border-gray-700 mb-12">
+      <button data-target="panel-standard" class="spec-tab active-tab font-semibold py-3 px-8 text-sm">Echo-11</button>
+      <button data-target="panel-sentinel" class="spec-tab font-semibold py-3 px-8 text-sm text-gray-400">Echo-11 Sentinel</button>
+    </div>
+
+    <div id="specs-tabs-content">
+
+      <div id="panel-standard" class="spec-panel">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-10 gap-x-6 text-center mb-20">
+          <div>
+            <p class="text-2xl font-semibold">18 hrs</p>
+            <p class="text-xs text-gray-400 mt-1">Operating Time¹</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">0.05s</p>
+            <p class="text-xs text-gray-400 mt-1">Cognitive Response²</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">150 TFLOPS</p>
+            <p class="text-xs text-gray-400 mt-1">Processing Power</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">25 kg</p>
+            <p class="text-xs text-gray-400 mt-1">Lift Capacity</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">Arasaka A17</p>
+            <p class="text-xs text-gray-400 mt-1">Neural Core</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20">
+          <div class="w-full lg:w-1/4 grid grid-cols-2 gap-8 text-left">
+            <div>
+              <p class="font-bold">Weight</p>
+              <p class="text-sm text-gray-300">165 lbs</p>
+            </div>
+            <div>
+              <p class="font-bold">Cargo Capacity</p>
+              <p class="text-sm text-gray-300">Integrated Pack</p>
+            </div>
+            <div>
+              <p class="font-bold">Chassis</p>
+              <p class="text-sm text-gray-300">Carbon-Alloy</p>
+            </div>
+             <div>
+              <p class="font-bold">Sensors</p>
+              <p class="text-sm text-gray-300">LiDAR, 360° Vision</p>
+            </div>
+          </div>
+          <div class="relative w-full lg:w-1/2 flex justify-center items-center">
+             <img src="./images/Robot1.png" alt="Echo-11 Robot" class="max-h-[400px]">
+             <div class="absolute bottom-0 text-center w-full">
+              <span class="text-xs text-gray-400">34.2 in</span>
+              <div class="h-px w-3/4 mx-auto bg-gray-600"></div>
+            </div>
+            <div class="absolute right-0 text-left h-full flex items-center">
+              <div class="w-px h-3/4 bg-gray-600"></div>
+              <span class="text-xs text-gray-400 -rotate-90">71.3 in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-sentinel" class="spec-panel hidden">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-10 gap-x-6 text-center mb-20">
+          <div>
+            <p class="text-2xl font-semibold">24 hrs</p>
+            <p class="text-xs text-gray-400 mt-1">Operating Time¹</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">0.01s</p>
+            <p class="text-xs text-gray-400 mt-1">Threat Response²</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">220 TFLOPS</p>
+            <p class="text-xs text-gray-400 mt-1">Processing Power</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">45 kg</p>
+            <p class="text-xs text-gray-400 mt-1">Lift Capacity</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold">Arasaka A17 Pro</p>
+            <p class="text-xs text-gray-400 mt-1">Neural Core</p>
+          </div>
+        </div>
+        <p class="text-center text-gray-400 italic mb-20">Dimensions and weight are identical to the standard model.</p>
+      </div>
+
+    </div>
+
+    <div class="max-w-4xl mx-auto py-10 border-t border-gray-800">
+      <h3 class="text-2xl font-bold mb-6">Charging</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="font-semibold">Inductive Charging Pad</p>
+          <p class="text-sm text-gray-300">2.5 kW Max</p>
+        </div>
+        <div>
+          <p class="font-semibold">Charge Time</p>
+          <p class="text-sm text-gray-300">90 min to 80%³</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto py-10 border-t border-gray-800">
+      <h3 class="text-2xl font-bold mb-6">Warranty</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="font-semibold">Basic Unit</p>
+          <p class="text-sm text-gray-300">4 years or 5,000 operating hours, whichever comes first</p>
+        </div>
+        <div>
+          <p class="font-semibold">Battery & Core Unit</p>
+          <p class="text-sm text-gray-300">8 years or 10,000 operating hours, whichever comes first</p>
+        </div>
+      </div>
+      <a href="#" class="text-sm text-gray-300 underline mt-4 inline-block">See Details</a>
+    </div>
+
+    <div class="max-w-4xl mx-auto py-10 border-t border-gray-800">
+      <h3 class="text-2xl font-bold mb-6">Other</h3>
+      <a href="#" class="text-sm underline">Compare Models</a>
+      
+      <div class="text-xs text-gray-500 mt-12 space-y-4">
+        <p>¹ Operating time is based on standard household task simulations. Actual time may vary based on usage intensity, environmental conditions, and software version.</p>
+        <p>² Cognitive response measured as the time from sensory input to motor function initiation under ideal network conditions. Sentinel model response time is for threat identification.</p>
+        <p>³ Charging performance is based on the included Arasaka PowerPad. Use of third-party chargers may result in different performance.</p>
+        <p>Certain advanced AI features require at least Standard Connectivity. Access to features that use cellular data and third-party licenses are subject to change. Learn more about Standard Connectivity and any limitations.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- AI ASSISTANT -->
+<aside class="fixed bottom-20 right-8 w-80 z-20 hidden md:block">
+  <div class="glass p-6 rounded-lg shadow-xl">
+    <h2 class="text-lg font-bold text-blue-400 mb-4">AI Assistant // PROTOCOL-H</h2>
+    <div id="ai-bubble" class="text-sm text-gray-300 min-h-[50px]">
+      <p id="ai-message">Initializing...</p>
+    </div>
+  </div>
+</aside>
+
+  <!-- SHOWCASE IMAGE (Echo-11, above footer, enhanced style) -->
+<section id="echo-11-intro" class="relative w-full h-screen bg-black flex flex-col items-center justify-center text-white overflow-hidden">
+  <div class="absolute inset-0 w-full h-full bg-cover bg-center" style="background-image: url('./images/generated-image (1).png'); opacity: 0.3;"></div>
+  <div class="relative z-10 text-center">
+    <h2 class="text-6xl md:text-8xl font-bold mb-4">Echo-11</h2>
+    <p class="text-xl md:text-2xl mb-8">Our most advanced AI Companion. Designed for life.</p>
+    <div class="flex space-x-4 justify-center">
+      <a href="#" class="px-8 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition-colors">Order Now</a>
+      <a href="#" class="px-8 py-3 border border-white text-white rounded-md font-semibold hover:bg-white hover:text-black transition-colors">Configure Yours</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER NAV (like Tesla style, black background, above chat bar) -->
+<footer class="w-full bg-black py-4">
+  <div class="max-w-5xl mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-white font-semibold">
+    <span>Arasaka © 2025</span>
+    <a href="#" class="hover:underline">Privacy & Legal</a>
+    <a href="#" class="hover:underline">Product Recalls</a>
+    <a href="#" class="hover:underline">Contact</a>
+    <a href="#" class="hover:underline">News</a>
+    <a href="#" class="hover:underline">Get Updates</a>
+    <a href="#" class="hover:underline">Locations</a>
+    <a href="#" class="hover:underline">Learn</a>
+  </div>
+</footer>
+
+<!-- AI INPUT FOOTER (smaller version) -->
+<div id="ai-footer-bar" class="fixed bottom-0 left-0 right-0 w-full flex justify-center p-2 bg-white border-t border-gray-200 z-50">
+  <div class="w-full max-w-2xl">
+    <div class="flex items-center bg-gray-100/95 backdrop-blur-sm border border-gray-300 rounded-lg px-2 py-0.5 shadow">
+      <!-- Message icon and Ask a Question button -->
+      <button id="open-chat-btn" class="flex items-center group focus:outline-none">
+        <svg class="h-4 w-4 text-gray-600 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+        </svg>
+        <span class="font-semibold text-gray-800 text-xs group-hover:text-blue-700 transition select-none">Ask a Question</span>
+      </button>
+      <!-- Input starts right after the text -->
+      <input
+        id="footer-question-input"
+        type="text"
+        placeholder="Type your question..."
+        class="w-full bg-transparent outline-none text-gray-800 placeholder-gray-500 text-xs ml-2"
+        autocomplete="off"
+      >
+      <!-- Arrow icon as send button -->
+      <button id="footer-send-btn" class="ml-1 p-1 rounded-full transition-colors" disabled>
+        <svg id="footer-arrow" class="h-4 w-4 text-gray-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SPACER for AI input footer (adjust height to match new bar size) -->
+<div id="ai-footer-spacer" class="w-full bg-white" style="height:48px;"></div>
+
+<!-- AI Chat Modal (hidden by default) -->
+<div id="footer-chatbox" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl p-8 max-w-md w-full shadow-xl relative">
+    <button id="close-chat-btn" class="absolute top-2 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-4 text-blue-700">Ask the AI Assistant</h2>
+    <input type="text" id="aiInputFooter" class="w-full border rounded-lg p-2 mb-4" placeholder="Type your question...">
+    <button class="bg-blue-700 text-white px-4 py-2 rounded-lg w-full font-semibold" onclick="sendAIQuestionFooter()">Send</button>
+    <div id="aiResponseFooter" class="mt-4 text-gray-700"></div>
+  </div>
+</div>
+
+<script>
+  const mainNavbar = document.getElementById('main-navbar');
+  const modelNavbar = document.getElementById('model-navbar');
+  const heroSection = document.getElementById('hero');
+
+  window.addEventListener('scroll', () => {
+    // Show secondary navbar after user scrolls 3/4 of the hero section
+    const triggerPoint = heroSection.offsetTop + heroSection.offsetHeight * 0.75;
+    if (window.scrollY + 80 > triggerPoint) {
+      mainNavbar.style.display = "none";        // hide transparent navbar
+      modelNavbar.classList.remove('translate-y-[-100%]');
+      modelNavbar.classList.add('translate-y-0');
+    } else {
+      mainNavbar.style.display = "block";       // show transparent navbar
+      modelNavbar.classList.add('translate-y-[-100%]');
+      modelNavbar.classList.remove('translate-y-0');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.spec-tab');
+    const panels = document.querySelectorAll('.spec-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Deactivate all tabs and panels
+        tabs.forEach(t => {
+          t.classList.remove('active-tab');
+          t.classList.add('text-gray-400');
+        });
+        panels.forEach(p => p.classList.add('hidden'));
+
+        // Activate the clicked tab
+        tab.classList.add('active-tab');
+        tab.classList.remove('text-gray-400');
+        
+        // Show the corresponding panel
+        const targetPanelId = tab.getAttribute('data-target');
+        const targetPanel = document.getElementById(targetPanelId);
+        if (targetPanel) {
+          targetPanel.classList.remove('hidden');
+        }
+      });
+    });
+  });
+
+  // --- CORRECTED LOGIC FOR INTERACTIVE TOUR ---
+    const tourSection = document.getElementById('interactive-tour-section');
+    if (tourSection) {
+      const features = ['feature-1', 'feature-2', 'feature-3'];
+      const featureElements = features.map(id => document.getElementById(id));
+      const sectionHeight = tourSection.offsetHeight;
+      const partHeight = sectionHeight / features.length;
+
+      window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY - tourSection.offsetTop;
+
+        // Check if we are scrolling within the tour section
+        if (scrollPosition >= 0 && scrollPosition < sectionHeight) {
+          // Determine which feature should be active
+          const activeIndex = Math.floor(scrollPosition / partHeight);
+          
+          featureElements.forEach((el, index) => {
+            if (index === activeIndex) {
+              el.style.opacity = '1';
+            } else {
+              el.style.opacity = '0';
+            }
+          });
+        } else {
+          // Hide all features if we are outside the section
+          featureElements.forEach(el => {
+            el.style.opacity = '0';
+          });
+        }
+      });
+    }
+      // Mega menu hover handling
+// --- CORRECTED MEGA MENU SCRIPT ---
+const mainNav = document.getElementById('main-nav');
+const menuOverlay = document.getElementById('mega-menu-overlay');
+if (mainNav && menuOverlay) {
+  const menuLinks = mainNav.querySelectorAll('[data-menu]');
+  const allPanels = menuOverlay.querySelectorAll('.mega-menu-panel');
+  let menuTimer;
+
+  function showMenu(panelId) {
+    clearTimeout(menuTimer);
+    menuOverlay.classList.add('active');
+    allPanels.forEach(panel => panel.classList.remove('active'));
+    const targetPanel = document.getElementById(panelId);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+    }
+  }
+
+  function hideMenu() {
+    menuTimer = setTimeout(() => {
+      menuOverlay.classList.remove('active');
+    }, 200);
+  }
+
+  menuLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      showMenu(link.dataset.menu);
+    });
+  });
+
+  mainNav.addEventListener('mouseleave', hideMenu);
+  menuOverlay.addEventListener('mouseenter', () => clearTimeout(menuTimer));
+  menuOverlay.addEventListener('mouseleave', hideMenu);
+}
+  document.addEventListener("DOMContentLoaded", () => {
+    const messages = [
+      "Echo-11: Operating Time — 18 hours on full charge.",
+      "Echo-11: Cognitive response latency only 0.05s.",
+      "Echo-11: Powered by Arasaka A17 Neural Core.",
+      "Echo-11 Sentinel upgrade extends runtime to 24 hours.",
+      "Echo-11: Certified safe for home & hospital care."
+    ];
+
+    let index = 0;
+    const messageEl = document.getElementById("ai-message");
+
+    function showNextMessage() {
+      messageEl.textContent = messages[index];
+      index = (index + 1) % messages.length;
+    }
+
+    // Show new message every 5 seconds
+    showNextMessage();
+    setInterval(showNextMessage, 5000);
+  });
+
+  // Footer input/arrow logic
+  const footerInput = document.getElementById('footer-question-input');
+  const footerSendBtn = document.getElementById('footer-send-btn');
+  const footerArrow = document.getElementById('footer-arrow');
+  const openChatBtn = document.getElementById('open-chat-btn');
+  const footerChatbox = document.getElementById('footer-chatbox');
+  const closeChatBtn = document.getElementById('close-chat-btn');
+
+  // Arrow color and button enable/disable
+  footerInput.addEventListener('input', () => {
+    if (footerInput.value.trim().length > 0) {
+      footerSendBtn.disabled = false;
+      footerArrow.classList.remove('text-gray-400');
+      footerArrow.classList.add('text-blue-600', 'cursor-pointer');
+    } else {
+      footerSendBtn.disabled = true;
+      footerArrow.classList.remove('text-blue-600', 'cursor-pointer');
+      footerArrow.classList.add('text-gray-400');
+    }
+  });
+
+  // Clicking "Ask a Question" opens chat modal
+  openChatBtn.addEventListener('click', () => {
+    footerChatbox.classList.remove('hidden');
+    document.getElementById('aiInputFooter').value = '';
+    document.getElementById('aiResponseFooter').innerText = '';
+  });
+
+  // Close chat modal
+  closeChatBtn.addEventListener('click', () => {
+    footerChatbox.classList.add('hidden');
+  });
+
+  // Optional: Send on arrow click (simulate AI response)
+  footerSendBtn.addEventListener('click', () => {
+    if (!footerSendBtn.disabled) {
+      footerChatbox.classList.remove('hidden');
+      document.getElementById('aiInputFooter').value = footerInput.value;
+      document.getElementById('aiResponseFooter').innerText = '';
+    }
+  });
+
+  document.body.classList.add('bg-black', 'text-white');
+</script>
+</body>
+</html>
